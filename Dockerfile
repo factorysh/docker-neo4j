@@ -9,3 +9,17 @@ RUN apt-get update \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
+# http
+EXPOSE 7474
+# bolt
+EXPOSE 7687
+
+ENV NEO4J_CONF=/etc/neo4j
+ENV NEO4J_HOME=/var/lib/neo4j
+VOLUME /var/lib/neo4j/data
+
+COPY neo4j.conf /etc/neo4j/neo4j.conf
+
+USER neo4j
+
+CMD ["/usr/share/neo4j/bin/neo4j", "console"]
