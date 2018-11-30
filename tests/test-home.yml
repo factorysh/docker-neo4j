@@ -1,0 +1,7 @@
+---
+
+http:
+  http://neo4j:7474/:
+    status: 200
+    body:
+      - /"bolt"/

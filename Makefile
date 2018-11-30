@@ -1,4 +1,5 @@
-.PHONY: demo
+.PHONY: demo tests
+GOSS_VERSION := 0.3.6
 
 all: | pull build
 
@@ -13,11 +14,16 @@ push:
 	docker push bearstech/neo4j:3
 	docker push bearstech/neo4j:latest
 
-test:
-	@echo 'ok'
+tests: bin/goss
+	make -C tests tests
 
 demo:
 	cd demo && docker-compose up
 
+bin/goss:
+	mkdir -p bin
+	curl -o bin/goss -L https://github.com/aelsabbahy/goss/releases/download/v${GOSS_VERSION}/goss-linux-amd64
+	chmod +x bin/goss
+
 clean:
-	rm -rf demo/data
+	rm -rf demo/data bin

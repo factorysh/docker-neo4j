@@ -1,0 +1,25 @@
+---
+
+version: "3"
+
+services:
+  neo4j:
+    image: bearstech/neo4j:3
+    environment:
+      PASSWORD: password
+
+  client:
+    image: bearstech/debian:stretch
+    volumes:
+      - ../bin/goss:/usr/local/bin/goss
+      - .:/goss
+    working_dir: /goss
+    links:
+      - neo4j
+    command: >
+      goss -g tests.yml validate
+        --retry-timeout 30s
+        --sleep 1s
+        --max-concurrent 4
+        --format documentation
+
