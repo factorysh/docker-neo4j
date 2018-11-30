@@ -18,8 +18,10 @@ ENV NEO4J_CONF=/etc/neo4j
 ENV NEO4J_HOME=/var/lib/neo4j
 VOLUME /var/lib/neo4j/data
 
+COPY entrypoint.sh /usr/local/bin/
 COPY neo4j.conf /etc/neo4j/neo4j.conf
 
 USER neo4j
 
+ENTRYPOINT ["entrypoint.sh"]
 CMD ["/usr/share/neo4j/bin/neo4j", "console"]
