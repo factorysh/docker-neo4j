@@ -14,3 +14,9 @@ push:
 
 test:
 	@echo 'ok'
+
+demo:
+	cd demo && docker-compose up
+
+clean:
+	rm -rf demo/data

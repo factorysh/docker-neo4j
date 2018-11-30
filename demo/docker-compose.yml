@@ -1,0 +1,15 @@
+---
+
+version: "3"
+
+services:
+  neo4j:
+    image: bearstech/neo4j:3
+    environment:
+      PASSWORD: ${NEO4J_ADMIN_PASSWORD}
+    ports:
+      - 7474:7474
+      - 7687:7687
+    volumes:
+      - ./data/neo4j:/var/lib/neo4j/data
+    user: ${UID}
