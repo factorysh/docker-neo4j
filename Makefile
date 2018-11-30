@@ -1,3 +1,4 @@
+.PHONY: demo
 
 all: | pull build
 
