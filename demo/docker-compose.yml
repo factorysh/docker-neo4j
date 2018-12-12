@@ -12,4 +12,3 @@ services:
       - 7687:7687
     volumes:
       - ./data/neo4j:/var/lib/neo4j/data
-    user: ${UID}
