@@ -21,6 +21,12 @@ VOLUME /var/lib/neo4j/data
 COPY entrypoint.sh /usr/local/bin/
 COPY neo4j.conf /etc/neo4j/neo4j.conf
 
+RUN usermod -u 1001 neo4j \
+    && groupmod -g 1001 neo4j \
+    && chown -R neo4j:neo4j /var/lib/neo4j \
+    && chown -R neo4j:neo4j /var/log/neo4j \
+    && ln -s /proc/self/fd/1 /var/log/neo4j/debug.log
+
 USER neo4j
 
 ENTRYPOINT ["entrypoint.sh"]
