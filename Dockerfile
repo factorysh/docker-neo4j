@@ -1,11 +1,12 @@
-FROM bearstech/java:latest
+FROM bearstech/java:1.8
 
+SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 RUN apt-get update \
-    && apt-get install -y apt-transport-https \
+    && apt-get install -y --no-install-recommends apt-transport-https \
     && wget -O - https://debian.neo4j.org/neotechnology.gpg.key | apt-key add - \
     && echo 'deb https://debian.neo4j.org/repo stable/' > /etc/apt/sources.list.d/neo4j.list \
     && apt-get update \
-    && apt-get install -y neo4j \
+    && apt-get install -y --no-install-recommends neo4j \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
@@ -21,7 +22,8 @@ VOLUME /var/lib/neo4j/data
 COPY entrypoint.sh /usr/local/bin/
 COPY neo4j.conf /etc/neo4j/neo4j.conf
 
-RUN usermod -u 1001 neo4j \
+RUN set -eux \
+    && usermod -u 1001 neo4j \
     && groupmod -g 1001 neo4j \
     && chown -R neo4j:neo4j /var/lib/neo4j \
     && chown -R neo4j:neo4j /var/log/neo4j \
