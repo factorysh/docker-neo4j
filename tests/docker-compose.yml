@@ -22,4 +22,3 @@ services:
         --sleep 1s
         --max-concurrent 4
         --format documentation
-
