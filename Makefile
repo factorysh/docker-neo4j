@@ -27,3 +27,6 @@ bin/goss:
 
 clean:
 	rm -rf demo/data bin
+
+down:
+	cd demo && docker-compose down
