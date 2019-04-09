@@ -31,5 +31,8 @@ RUN set -eux \
 
 USER neo4j
 
+ARG GIT_VERSION
+LABEL com.bearstech.source.neo4j=https://github.com/factorysh/docker-neo4j/commit/${GIT_VERSION}
+
 ENTRYPOINT ["entrypoint.sh"]
 CMD ["/usr/share/neo4j/bin/neo4j", "console"]
