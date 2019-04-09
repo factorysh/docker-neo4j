@@ -1,5 +1,6 @@
 .PHONY: demo tests
 GOSS_VERSION := 0.3.6
+GIT_VERSION := $(shell git rev-parse HEAD)
 
 all: | pull build
 
@@ -7,7 +8,10 @@ pull:
 	docker pull bearstech/java:latest
 
 build:
-	docker build -t bearstech/neo4j:3 .
+	docker build \
+		--build-arg GIT_VERSION=${GIT_VERSION} \
+		-t bearstech/neo4j:3 \
+		.
 	docker tag bearstech/neo4j:3 bearstech/neo4j:latest
 
 push:
