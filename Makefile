@@ -18,19 +18,25 @@ push:
 	docker push bearstech/neo4j:3
 	docker push bearstech/neo4j:latest
 
-tests: bin/goss
+tests: bin/goss bin/wait-for
 	make -C tests tests
 
 demo:
 	cd demo && docker-compose up
 
-bin/goss:
+bin:
 	mkdir -p bin
+
+bin/goss: bin
 	curl -o bin/goss -L https://github.com/aelsabbahy/goss/releases/download/v${GOSS_VERSION}/goss-linux-amd64
 	chmod +x bin/goss
 
+bin/wait-for: bin
+	curl -o bin/wait-for https://raw.githubusercontent.com/factorysh/wait-for/master/wait-for
+	chmod +x bin/wait-for
+
 clean:
-	rm -rf demo/data bin
+	rm -rf demo/data bin tests/data
 
 down:
 	cd demo && docker-compose down
