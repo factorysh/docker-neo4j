@@ -5,18 +5,24 @@ version: "3"
 services:
   neo4j:
     image: bearstech/neo4j:3
+    ports:
+      - 7474
+    volumes:
+      - ./data:/var/lib/neo4j/data
     environment:
       PASSWORD: password
 
   client:
-    image: bearstech/debian:stretch
+    image: alpine
     volumes:
-      - ../bin/goss:/usr/local/bin/goss
+      - ../bin/goss:/usr/local/bin/goss:ro
+      - ../bin/wait-for:/usr/local/bin/wait-for:ro
       - .:/goss
     working_dir: /goss
     links:
       - neo4j
     command: >
+      wait-for neo4j:7474 --timeout=60 --
       goss -g tests.yml validate
         --retry-timeout 30s
         --sleep 1s
