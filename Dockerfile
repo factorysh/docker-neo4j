@@ -31,8 +31,22 @@ RUN set -eux \
 
 USER neo4j
 
-ARG GIT_VERSION
-LABEL com.bearstech.source.neo4j=https://github.com/factorysh/docker-neo4j/commit/${GIT_VERSION}
 
 ENTRYPOINT ["entrypoint.sh"]
 CMD ["/usr/share/neo4j/bin/neo4j", "console"]
+
+# generated labels
+
+ARG GIT_VERSION
+ARG GIT_DATE
+ARG BUILD_DATE
+
+LABEL com.bearstech.image.revision_date=${GIT_DATE}
+
+LABEL org.opencontainers.image.authors=Bearstech
+
+LABEL org.opencontainers.image.revision=${GIT_VERSION}
+LABEL org.opencontainers.image.created=${BUILD_DATE}
+
+LABEL org.opencontainers.image.url=https://github.com/factorysh/docker-neo4j
+LABEL org.opencontainers.image.source=https://github.com/factorysh/docker-neo4j/blob/${GIT_VERSION}/Dockerfile
