@@ -1,7 +1,9 @@
 FROM bearstech/java:1.8
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
-RUN apt-get update \
+RUN set -eux \
+    && export http_proxy=${HTTP_PROXY} \
+    && apt-get update \
     && apt-get install -y --no-install-recommends apt-transport-https \
     && wget -O - https://debian.neo4j.org/neotechnology.gpg.key | apt-key add - \
     && echo 'deb https://debian.neo4j.org/repo stable/' > /etc/apt/sources.list.d/neo4j.list \
