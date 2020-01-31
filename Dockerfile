@@ -5,7 +5,7 @@ RUN set -eux \
     && export http_proxy=${HTTP_PROXY} \
     && apt-get update \
     && apt-get install -y --no-install-recommends apt-transport-https \
-    && wget -O - https://debian.neo4j.org/neotechnology.gpg.key | apt-key add - \
+    && wget -O - https://debian.neo4j.org/neotechnology.gpg.key | gpg --dearmor > /etc/apt/trusted.gpg.d/neo4j.gpg \
     && echo 'deb https://debian.neo4j.org/repo stable/' > /etc/apt/sources.list.d/neo4j.list \
     && apt-get update \
     && apt-get install -y --no-install-recommends neo4j \
